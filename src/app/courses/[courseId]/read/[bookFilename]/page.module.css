@@ -1,0 +1,26 @@
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 400px;
+}
+
+.iframe {
+    flex: 1;
+    border: none;
+    width: 100%;
+}
+
+.summaryText {
+    white-space: pre-wrap;
+}

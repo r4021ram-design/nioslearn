@@ -1,0 +1,658 @@
+[
+  {
+    "bookId": "311_E_book1",
+    "chapters": [
+      {
+        "title": "Lesson 1: Sets",
+        "module": "Module I: Sets, Relations and Functions",
+        "startPage": 5,
+        "endPage": 28
+      },
+      {
+        "title": "Lesson 2: Relations and Functions-I",
+        "module": "Module I: Sets, Relations and Functions",
+        "startPage": 29,
+        "endPage": 62
+      },
+      {
+        "title": "Lesson 3: Trigonometric Functions-I",
+        "module": "Module I: Sets, Relations and Functions",
+        "startPage": 63,
+        "endPage": 98
+      },
+      {
+        "title": "Lesson 4: Trigonometric Functions-II",
+        "module": "Module I: Sets, Relations and Functions",
+        "startPage": 99,
+        "endPage": 130
+      },
+      {
+        "title": "Lesson 5: Relation between Sides and Angles of  a Triangle",
+        "module": "Module I: Sets, Relations and Functions",
+        "startPage": 131,
+        "endPage": 144
+      },
+      {
+        "title": "Lesson 6: Sequences and Series",
+        "module": "Module II: Sequences and Series",
+        "startPage": 145,
+        "endPage": 172
+      },
+      {
+        "title": "Lesson 7: Some special sequences",
+        "module": "Module II: Sequences and Series",
+        "startPage": 173,
+        "endPage": 184
+      },
+      {
+        "title": "Lesson 8: Complex Numbers",
+        "module": "Module III: Algebra-I",
+        "startPage": 185,
+        "endPage": 212
+      },
+      {
+        "title": "Lesson 9: Quadratic Equationsand Linear Inequalities",
+        "module": "Module III: Algebra-I",
+        "startPage": 213,
+        "endPage": 238
+      },
+      {
+        "title": "Lesson 10: Principle of Mathematical Induction",
+        "module": "Module III: Algebra-I",
+        "startPage": 239,
+        "endPage": 250
+      },
+      {
+        "title": "Lesson 11: Permutations and Combinations",
+        "module": "Module III: Algebra-I",
+        "startPage": 251,
+        "endPage": 274
+      },
+      {
+        "title": "Lesson 12: Binomial Theorem",
+        "module": "Module III: Algebra-I",
+        "startPage": 275,
+        "endPage": 290
+      },
+      {
+        "title": "Lesson 13: Cartesian System of Rectangular Co-ordinates",
+        "module": "Module IV: Co-ordinate Geometry",
+        "startPage": 291,
+        "endPage": 320
+      },
+      {
+        "title": "Lesson 14: Straight Lines",
+        "module": "Module IV: Co-ordinate Geometry",
+        "startPage": 321,
+        "endPage": 348
+      },
+      {
+        "title": "Lesson 15: Circles",
+        "module": "Module IV: Co-ordinate Geometry",
+        "startPage": 349,
+        "endPage": 356
+      },
+      {
+        "title": "Lesson 16: Conic Sections",
+        "module": "Module IV: Co-ordinate Geometry",
+        "startPage": 357,
+        "endPage": 376
+      },
+      {
+        "title": "Lesson 17: Measures of Dispersion",
+        "module": "Module V: Statistics and Probability",
+        "startPage": 377,
+        "endPage": 414
+      },
+      {
+        "title": "Lesson 18: Random Experiments and Events",
+        "module": "Module V: Statistics and Probability",
+        "startPage": 415,
+        "endPage": 424
+      },
+      {
+        "title": "Lesson 19: Probability",
+        "module": "Module V: Statistics and Probability",
+        "startPage": 425,
+        "endPage": 479
+      }
+    ]
+  },
+  {
+    "bookId": "311_E_book2",
+    "chapters": [
+      {
+        "title": "Lesson 11: A   AAA",
+        "startPage": 89,
+        "endPage": 0
+      },
+      {
+        "title": "Lesson 20: MATRICES",
+        "startPage": 1,
+        "endPage": 46
+      },
+      {
+        "title": "Lesson 21: DETERMINANTS",
+        "startPage": 47,
+        "endPage": 72
+      },
+      {
+        "title": "Lesson 22: INVERSE OF A MATRIX AND ITS",
+        "startPage": 73,
+        "endPage": 122
+      },
+      {
+        "title": "Lesson 24: INVERSE  TRIGONOMETRIC  FUNCTIONS",
+        "startPage": 123,
+        "endPage": 138
+      },
+      {
+        "title": "Lesson 25: LIMIT AND  CONTINUITY",
+        "startPage": 139,
+        "endPage": 180
+      },
+      {
+        "title": "Lesson 26: DIFFERENTIATION",
+        "startPage": 181,
+        "endPage": 208
+      },
+      {
+        "title": "Lesson 27: DIFFERENTIATION  OF TRIGONOMETRIC",
+        "startPage": 209,
+        "endPage": 234
+      },
+      {
+        "title": "Lesson 28: DIFFERENTIATION  OF  EXPONENTIAL",
+        "startPage": 235,
+        "endPage": 262
+      },
+      {
+        "title": "Lesson 29: APPLICATIONS  OF  DERIVATIVES",
+        "startPage": 263,
+        "endPage": 320
+      },
+      {
+        "title": "Lesson 30: INTEGRATION",
+        "startPage": 321,
+        "endPage": 370
+      },
+      {
+        "title": "Lesson 31: DEFINITE  INTEGRALS",
+        "startPage": 371,
+        "endPage": 402
+      },
+      {
+        "title": "Lesson 32: DIFFERENTIAL  EQUATIONS",
+        "startPage": 403,
+        "endPage": 428
+      },
+      {
+        "title": "Lesson 33: INTRODUCTION  TO  THREE",
+        "startPage": 429,
+        "endPage": 440
+      },
+      {
+        "title": "Lesson 34: VECTORS",
+        "startPage": 441,
+        "endPage": 494
+      },
+      {
+        "title": "Lesson 36: STRAIGHT  LINES",
+        "startPage": 495,
+        "endPage": 512
+      },
+      {
+        "title": "Lesson 37: LINEAR  PROGRAMMING",
+        "startPage": 513,
+        "endPage": 540
+      },
+      {
+        "title": "Lesson 38: MATHEMATICAL  REASONING",
+        "startPage": 541,
+        "endPage": 42
+      },
+      {
+        "title": "Lesson 163: CHECK  YOUR  PROGRESS",
+        "startPage": 43,
+        "endPage": 100
+      },
+      {
+        "title": "Lesson 541: CHECK   YOUR   PROGRESS",
+        "startPage": 101,
+        "endPage": 561
+      },
+      {
+        "title": "Lesson 1910: A    A",
+        "startPage": 562,
+        "endPage": 18
+      },
+      {
+        "title": "Lesson 2503: A    BC",
+        "startPage": 19,
+        "endPage": 578
+      }
+    ]
+  },
+  {
+    "bookId": "320_E_book1",
+    "chapters": [
+      {
+        "title": "Lesson 1: Accounting - An Introduction",
+        "module": "Module 1: Basic Accounting",
+        "startPage": 9,
+        "endPage": 30
+      },
+      {
+        "title": "Lesson 2: Accounting Concepts",
+        "module": "Module 1: Basic Accounting",
+        "startPage": 31,
+        "endPage": 45
+      },
+      {
+        "title": "Lesson 3: Accounting Conventions and Standards",
+        "module": "Module 1: Basic Accounting",
+        "startPage": 46,
+        "endPage": 57
+      },
+      {
+        "title": "Lesson 4: Accounting for Business Transactions",
+        "module": "Module 1: Basic Accounting",
+        "startPage": 58,
+        "endPage": 87
+      },
+      {
+        "title": "Lesson 5: Journal",
+        "module": "Module 1: Basic Accounting",
+        "startPage": 88,
+        "endPage": 110
+      },
+      {
+        "title": "Lesson 6: Ledger",
+        "module": "Module 1: Basic Accounting",
+        "startPage": 111,
+        "endPage": 127
+      },
+      {
+        "title": "Lesson 7: Cash Book",
+        "module": "Module 1: Basic Accounting",
+        "startPage": 128,
+        "endPage": 152
+      },
+      {
+        "title": "Lesson 8: Special Purpose Books",
+        "module": "Module 1: Basic Accounting",
+        "startPage": 153,
+        "endPage": 198
+      },
+      {
+        "title": "Lesson 10: Bank Reconciliation Statement",
+        "module": "Module 2: Trial Balance and Computers",
+        "startPage": 199,
+        "endPage": 212
+      },
+      {
+        "title": "Lesson 11: Bills of Exchange",
+        "module": "Module 2: Trial Balance and Computers",
+        "startPage": 213,
+        "endPage": 234
+      },
+      {
+        "title": "Lesson 12: Errors and their Rectification",
+        "module": "Module 2: Trial Balance and Computers",
+        "startPage": 235,
+        "endPage": 252
+      },
+      {
+        "title": "Lesson 13: Computer and Computerised Accounting System",
+        "module": "Module 2: Trial Balance and Computers",
+        "startPage": 253,
+        "endPage": 292
+      }
+    ]
+  },
+  {
+    "bookId": "320_E_book2",
+    "chapters": [
+      {
+        "title": "Lesson 15: Provision and Reserves",
+        "module": "Module 3: Financial Statements",
+        "startPage": 43,
+        "endPage": 54
+      },
+      {
+        "title": "Lesson 16: Financial Statements : An Introduction",
+        "module": "Module 3: Financial Statements",
+        "startPage": 55,
+        "endPage": 82
+      },
+      {
+        "title": "Lesson 17: Financial Statements - I",
+        "module": "Module 3: Financial Statements",
+        "startPage": 83,
+        "endPage": 105
+      },
+      {
+        "title": "Lesson 18: Financial Statements - II",
+        "module": "Module 3: Financial Statements",
+        "startPage": 106,
+        "endPage": 145
+      },
+      {
+        "title": "Lesson 19: Not for Profit Organisation : An Introduction",
+        "module": "Module 3: Financial Statements",
+        "startPage": 146,
+        "endPage": 160
+      },
+      {
+        "title": "Lesson 20: Financial Statements (Not for Profit Organisations)",
+        "module": "Module 3: Financial Statements",
+        "startPage": 161,
+        "endPage": 181
+      },
+      {
+        "title": "Lesson 21: Accounts From Incomplete Records",
+        "module": "Module 3: Financial Statements",
+        "startPage": 182,
+        "endPage": 252
+      },
+      {
+        "title": "Lesson 23: Admission of a Partner",
+        "module": "Module 4: Partnership Accounts",
+        "startPage": 253,
+        "endPage": 319
+      },
+      {
+        "title": "Lesson 24: Retirement and Death of a Partner",
+        "module": "Module 4: Partnership Accounts",
+        "startPage": 320,
+        "endPage": 354
+      },
+      {
+        "title": "Lesson 25: Dissolution of a Partnership Firm",
+        "module": "Module 4: Partnership Accounts",
+        "startPage": 355,
+        "endPage": 400
+      },
+      {
+        "title": "Lesson 27: Issue of Shares",
+        "module": "Module 5: Company Accounts",
+        "startPage": 401,
+        "endPage": 434
+      },
+      {
+        "title": "Lesson 28: Foreiture of Shares",
+        "module": "Module 5: Company Accounts",
+        "startPage": 435,
+        "endPage": 453
+      },
+      {
+        "title": "Lesson 29: Reissue of Forfeited Shares",
+        "module": "Module 5: Company Accounts",
+        "startPage": 454,
+        "endPage": 467
+      },
+      {
+        "title": "Lesson 30: Issue of Debentures",
+        "module": "Module 5: Company Accounts",
+        "startPage": 468,
+        "endPage": 501
+      }
+    ]
+  },
+  {
+    "bookId": "320_E_book3",
+    "chapters": [
+      {
+        "title": "Lesson 32: Accounting Ratios - I",
+        "module": "Module 6: Analysis of Financial Statements",
+        "startPage": 43,
+        "endPage": 63
+      },
+      {
+        "title": "Lesson 33: Accounting Ratios - II",
+        "module": "Module 6: Analysis of Financial Statements",
+        "startPage": 64,
+        "endPage": 76
+      },
+      {
+        "title": "Lesson 34: Cash Flow Statement",
+        "module": "Module 6: Analysis of Financial Statements",
+        "startPage": 77,
+        "endPage": 144
+      },
+      {
+        "title": "Lesson 36: Use of Spread Sheet in Business Application",
+        "module": "Module 7: Application of Computers in Financial Accounting",
+        "startPage": 145,
+        "endPage": 156
+      },
+      {
+        "title": "Lesson 37: Graphs and Charts for Business",
+        "module": "Module 7: Application of Computers in Financial Accounting",
+        "startPage": 157,
+        "endPage": 171
+      },
+      {
+        "title": "Lesson 38: Database Management System for Accounting",
+        "module": "Module 7: Application of Computers in Financial Accounting",
+        "startPage": 172,
+        "endPage": 225
+      }
+    ]
+  },
+  {
+    "bookId": "Book1_318",
+    "chapters": [
+      {
+        "title": "Lesson 1: Overview of Indian Economy",
+        "module": "Module I: Indian Economic Development",
+        "startPage": 8,
+        "endPage": 33
+      },
+      {
+        "title": "Lesson 3: Economic  Growth  and  Economic  Development",
+        "module": "Module II: Current  Challenges  before  the  Indian  Economy",
+        "startPage": 34,
+        "endPage": 63
+      },
+      {
+        "title": "Lesson 5: Meaning,  Scope  and  its  Need  in  Economic",
+        "module": "Module III: Introduction  to  Statistics",
+        "startPage": 64,
+        "endPage": 74
+      },
+      {
+        "title": "Lesson 6: Collection and Classification of Data",
+        "module": "Module III: Introduction  to  Statistics",
+        "startPage": 75,
+        "endPage": 90
+      },
+      {
+        "title": "Lesson 7: Presentation  of  Data",
+        "module": "Module III: Introduction  to  Statistics",
+        "startPage": 91,
+        "endPage": 115
+      },
+      {
+        "title": "Lesson 8: Measures  of  Central  Tendency",
+        "module": "Module IV: Statistical  Tools",
+        "startPage": 116,
+        "endPage": 184
+      },
+      {
+        "title": "Lesson 10: Correlation Analysis",
+        "module": "Module IV: Statistical  Tools",
+        "startPage": 185,
+        "endPage": 210
+      },
+      {
+        "title": "Lesson 11: Index Numbers",
+        "module": "Module IV: Statistical  Tools",
+        "startPage": 211,
+        "endPage": 248
+      }
+    ]
+  },
+  {
+    "bookId": "Book2_318",
+    "chapters": [
+      {
+        "title": "Lesson 13: Central  Problems  of  an  Economy",
+        "module": "Module V: Introduction  to  Economics",
+        "startPage": 9,
+        "endPage": 26
+      },
+      {
+        "title": "Lesson 14: Consumer’s Equilibrium",
+        "module": "Module VI: Consumer’s  Behaviour",
+        "startPage": 27,
+        "endPage": 45
+      },
+      {
+        "title": "Lesson 15: Demand",
+        "module": "Module VI: Consumer’s  Behaviour",
+        "startPage": 46,
+        "endPage": 63
+      },
+      {
+        "title": "Lesson 16: Price  Elasticity  of  Demand",
+        "module": "Module VI: Consumer’s  Behaviour",
+        "startPage": 64,
+        "endPage": 80
+      },
+      {
+        "title": "Lesson 17: Production Function",
+        "module": "Module VII: Producer’s  Behaviour",
+        "startPage": 81,
+        "endPage": 93
+      },
+      {
+        "title": "Lesson 18: Cost  of  Production",
+        "module": "Module VII: Producer’s  Behaviour",
+        "startPage": 94,
+        "endPage": 113
+      },
+      {
+        "title": "Lesson 19: Supply",
+        "module": "Module VII: Producer’s  Behaviour",
+        "startPage": 114,
+        "endPage": 126
+      },
+      {
+        "title": "Lesson 20: Price Elasticity of Supply",
+        "module": "Module VII: Producer’s  Behaviour",
+        "startPage": 127,
+        "endPage": 142
+      },
+      {
+        "title": "Lesson 21: Forms  of  Market",
+        "module": "Module VIII: Market  and  Price  Determination",
+        "startPage": 143,
+        "endPage": 154
+      },
+      {
+        "title": "Lesson 22: Price  Determination  Under  Perfect  Competition",
+        "module": "Module VIII: Market  and  Price  Determination",
+        "startPage": 155,
+        "endPage": 172
+      },
+      {
+        "title": "Lesson 23: Revenue  and  Profit  Maximization  of  a  competition  Firm",
+        "module": "Module VIII: Market  and  Price  Determination",
+        "startPage": 173,
+        "endPage": 186
+      },
+      {
+        "title": "Lesson 24: National  Income  and  related  Aggregates",
+        "module": "Module IX: National  Income  Accounting",
+        "startPage": 187,
+        "endPage": 207
+      },
+      {
+        "title": "Lesson 25: National  Income  and  its  Measurement",
+        "module": "Module IX: National  Income  Accounting",
+        "startPage": 208,
+        "endPage": 228
+      },
+      {
+        "title": "Lesson 26: Consumption, Saving and Investment",
+        "module": "Module X: Theory  of  Income  and  Employment",
+        "startPage": 229,
+        "endPage": 248
+      },
+      {
+        "title": "Lesson 27: Theory  of  Income  Determination",
+        "module": "Module X: Theory  of  Income  and  Employment",
+        "startPage": 249,
+        "endPage": 272
+      },
+      {
+        "title": "Lesson 28: Money and Banking",
+        "module": "Module XI: Money,  Banking  and  Government  Budget",
+        "startPage": 273,
+        "endPage": 286
+      },
+      {
+        "title": "Lesson 29: Government  and  the  Budget",
+        "module": "Module XI: Money,  Banking  and  Government  Budget",
+        "startPage": 287,
+        "endPage": 330
+      }
+    ]
+  },
+  {
+    "bookId": "srsec336eng",
+    "chapters": [
+      {
+        "title": "Lesson 1: Basics of Computer",
+        "startPage": 2,
+        "endPage": 38
+      },
+      {
+        "title": "Lesson 2: Operating System",
+        "startPage": 39,
+        "endPage": 56
+      },
+      {
+        "title": "Lesson 3: Basics of Word Processing",
+        "startPage": 57,
+        "endPage": 79
+      },
+      {
+        "title": "Lesson 4: Formatting Documents",
+        "startPage": 80,
+        "endPage": 108
+      },
+      {
+        "title": "Lesson 5: Mail Merge",
+        "startPage": 109,
+        "endPage": 126
+      },
+      {
+        "title": "Lesson 6: Basics of Spreadsheet",
+        "startPage": 127,
+        "endPage": 160
+      },
+      {
+        "title": "Lesson 7: Formatting Worksheets",
+        "startPage": 161,
+        "endPage": 187
+      },
+      {
+        "title": "Lesson 8: Formulas, Functions and Charts",
+        "startPage": 188,
+        "endPage": 226
+      },
+      {
+        "title": "Lesson 9: Creating Presentation",
+        "startPage": 227,
+        "endPage": 18
+      },
+      {
+        "title": "Lesson 10: Introduction to Internet",
+        "startPage": 19,
+        "endPage": 262
+      }
+    ]
+  }
+]

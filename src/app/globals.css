@@ -1,42 +1,48 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Mantine will handle colors, but we can keep these if needed for other global vars */
+
+/* Mantine handles body styles */
+
+.notebook-paper {
+  background-color: #fff;
+  background-image:
+    linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
+    linear-gradient(#eee .1em, transparent .1em);
+  background-size: 100% 1.5em;
+  padding: 2rem 5rem 1.2rem 6rem;
+  font-family: 'Kalam', cursive !important;
+  font-weight: 700;
+  line-height: 1.5em;
+  min-height: 400px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  border-radius: 8px;
+  color: #1a237e;
+  position: relative;
+  border: 1px solid #ddd;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.notebook-paper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 80px;
+  width: 2px;
+  height: 100%;
+  background-color: #ff8a80;
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+.notebook-paper h1,
+.notebook-paper h2,
+.notebook-paper h3,
+.notebook-paper h4,
+.notebook-paper h5,
+.notebook-paper h6 {
+  font-family: 'Kalam', cursive !important;
+  font-weight: 700;
+  color: #d32f2f;
+  margin-top: 0;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+.notebook-paper * {
+  font-family: 'Kalam', cursive !important;
+  font-weight: 700;
 }

@@ -1,0 +1,16 @@
+{
+  "name": "NIOS EdTech",
+  "short_name": "NIOS LMS",
+  "description": "Integrated Learning Ecosystem for NIOS Senior Secondary",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#228be6",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
