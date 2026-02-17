@@ -9,6 +9,57 @@ const pdf = require('pdf-parse/lib/pdf-parse.js');
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 const MODEL_NAME = 'gemini-flash-latest';
 
+// On Vercel, the filesystem is read-only except for /tmp
+const IS_VERCEL = process.env.VERCEL === '1';
+const CACHE_DIR = IS_VERCEL 
+    ? path.join('/tmp', 'ai-cache')
+    : path.join(process.cwd(), 'src', 'data', 'ai-cache');
+
+async function ensureCacheDir() {
+    try {
+        await fs.access(CACHE_DIR);
+    } catch {
+        await fs.mkdir(CACHE_DIR, { recursive: true });
+    }
+}
+
+function getCacheKey(mode: string, page?: number, end?: number) {
+    if (mode === 'page') return `page_${page}`;
+    if (mode === 'chapter') return `chapter_${page}_${end}`;
+    return 'full';
+}
+
+async function getCachedData(bookId: string, type: string, key: string) {
+    try {
+        const cacheFile = path.join(CACHE_DIR, `${bookId.replace(/\.pdf$/i, '')}.json`);
+        const content = await fs.readFile(cacheFile, 'utf-8');
+        const cache = JSON.parse(content);
+        return cache[type]?.[key] || null;
+    } catch {
+        return null;
+    }
+}
+
+async function saveCachedData(bookId: string, type: string, key: string, data: any) {
+    try {
+        await ensureCacheDir();
+        const bookKey = bookId.replace(/\.pdf$/i, '');
+        const cacheFile = path.join(CACHE_DIR, `${bookKey}.json`);
+        let cache: any = {};
+        try {
+            const content = await fs.readFile(cacheFile, 'utf-8');
+            cache = JSON.parse(content);
+        } catch { }
+
+        if (!cache[type]) cache[type] = {};
+        cache[type][key] = data;
+        await fs.writeFile(cacheFile, JSON.stringify(cache, null, 2));
+    } catch (e) {
+        // Silently fail caching on Vercel or other restricted environments
+        console.warn('Failed to save to cache (expected on some cloud environments):', e);
+    }
+}
+
 /**
  * Robustly parses JSON from LLM responses, handling markdown fences and surrounding text.
  */
@@ -93,6 +144,15 @@ async function getTextFromPDF(bookFilename: string, pageNumber?: number, endPage
 }
 
 export async function getSummary(bookFilename: string, mode: 'full' | 'page' | 'chapter' = 'full', pageNumber?: number, endPage?: number) {
+    if (!process.env.GEMINI_API_KEY) {
+        console.error('GEMINI_API_KEY is missing');
+        return 'Configuration Error: AI API Key is not set.';
+    }
+
+    const cacheKey = getCacheKey(mode, pageNumber, endPage);
+    const cached = await getCachedData(bookFilename, 'summary', cacheKey);
+    if (cached) return cached;
+
     try {
         const text = await getTextFromPDF(bookFilename, pageNumber, endPage);
         const slicedText = text.slice(0, 60000);
@@ -102,7 +162,9 @@ export async function getSummary(bookFilename: string, mode: 'full' | 'page' | '
         if (mode === 'chapter') promptContext = `summary of pages ${pageNumber}-${endPage}`;
         const prompt = `You are an expert tutor. Provide a ${promptContext}. Focus on key learning objectives. Format with Markdown. \n\nText:\n${slicedText}`;
         const result = await model.generateContent(prompt);
-        return result.response.text();
+        const summary = result.response.text();
+        await saveCachedData(bookFilename, 'summary', cacheKey, summary);
+        return summary;
     } catch (error) {
         console.error('Summary error:', error);
         return 'Failed to generate summary.';
@@ -110,13 +172,24 @@ export async function getSummary(bookFilename: string, mode: 'full' | 'page' | '
 }
 
 export async function getQuiz(bookFilename: string, mode: 'full' | 'page' | 'chapter' = 'full', pageNumber?: number, endPage?: number) {
+    if (!process.env.GEMINI_API_KEY) {
+        console.error('GEMINI_API_KEY is missing');
+        return [];
+    }
+
+    const cacheKey = getCacheKey(mode, pageNumber, endPage);
+    const cached = await getCachedData(bookFilename, 'quiz', cacheKey);
+    if (cached) return cached;
+
     try {
         const text = await getTextFromPDF(bookFilename, pageNumber, endPage);
         const slicedText = text.slice(0, 60000);
         const model = genAI.getGenerativeModel({ model: MODEL_NAME });
         const prompt = `Generate 5 MCQs based on this text. Return raw JSON array: [{"question": "...", "options": ["...", "..."], "answer": "..."}].\n\nText:\n${slicedText}`;
         const result = await model.generateContent(prompt);
-        return parseJSONResponse(result.response.text(), 'array');
+        const quiz = parseJSONResponse(result.response.text(), 'array');
+        await saveCachedData(bookFilename, 'quiz', cacheKey, quiz);
+        return quiz;
     } catch (error) {
         console.error('Quiz error:', error);
         return [];
@@ -124,13 +197,24 @@ export async function getQuiz(bookFilename: string, mode: 'full' | 'page' | 'cha
 }
 
 export async function getMindMap(bookFilename: string, mode: 'full' | 'page' | 'chapter' = 'full', pageNumber?: number, endPage?: number) {
+    if (!process.env.GEMINI_API_KEY) {
+        console.error('GEMINI_API_KEY is missing');
+        return { nodes: [], edges: [] };
+    }
+
+    const cacheKey = getCacheKey(mode, pageNumber, endPage);
+    const cached = await getCachedData(bookFilename, 'mindmap', cacheKey);
+    if (cached) return cached;
+
     try {
         const text = await getTextFromPDF(bookFilename, pageNumber, endPage);
         const slicedText = text.slice(0, 60000);
         const model = genAI.getGenerativeModel({ model: MODEL_NAME });
         const prompt = `Create a hierarchical mind map JSON: {"nodes": [{"id": "1", "label": "...", "type": "input"}], "edges": [{"id": "e1-2", "source": "1", "target": "2"}]}.\n\nText:\n${slicedText}`;
         const result = await model.generateContent(prompt);
-        return parseJSONResponse(result.response.text(), 'object');
+        const mindmap = parseJSONResponse(result.response.text(), 'object');
+        await saveCachedData(bookFilename, 'mindmap', cacheKey, mindmap);
+        return mindmap;
     } catch (error) {
         console.error('MindMap error:', error);
         return { nodes: [], edges: [] };
@@ -138,13 +222,24 @@ export async function getMindMap(bookFilename: string, mode: 'full' | 'page' | '
 }
 
 export async function getInfographic(bookFilename: string, mode: 'full' | 'page' | 'chapter' = 'full', pageNumber?: number, endPage?: number) {
+    if (!process.env.GEMINI_API_KEY) {
+        console.error('GEMINI_API_KEY is missing');
+        return [];
+    }
+
+    const cacheKey = getCacheKey(mode, pageNumber, endPage);
+    const cached = await getCachedData(bookFilename, 'infographic', cacheKey);
+    if (cached) return cached;
+
     try {
         const text = await getTextFromPDF(bookFilename, pageNumber, endPage);
         const slicedText = text.slice(0, 60000);
         const model = genAI.getGenerativeModel({ model: MODEL_NAME });
         const prompt = `Identify 5-7 key concepts for an infographic. Return JSON array: [{"title": "...", "description": "...", "icon": "Box"}].\n\nText:\n${slicedText}`;
         const result = await model.generateContent(prompt);
-        return parseJSONResponse(result.response.text(), 'array');
+        const infographic = parseJSONResponse(result.response.text(), 'array');
+        await saveCachedData(bookFilename, 'infographic', cacheKey, infographic);
+        return infographic;
     } catch (error) {
         console.error('Infographic error:', error);
         return [];
@@ -171,6 +266,11 @@ export async function getPodcast(bookFilename: string) {
 
             pythonProcess.stderr.on('data', (data) => {
                 console.error(`Python stderr: ${data}`);
+            });
+
+            pythonProcess.on('error', (err) => {
+                console.error('Failed to start python process:', err);
+                reject(new Error('Python environment not found. Podcast generation is currently unavailable on this platform.'));
             });
 
             pythonProcess.on('close', (code) => {
