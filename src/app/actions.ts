@@ -7,7 +7,7 @@ import path from 'path';
 const pdf = require('pdf-parse/lib/pdf-parse.js');
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
-const MODEL_NAME = 'gemini-flash-latest';
+const MODEL_NAME = 'gemini-1.5-flash';
 
 // On Vercel, the filesystem is read-only except for /tmp
 const IS_VERCEL = process.env.VERCEL === '1';
