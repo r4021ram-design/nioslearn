@@ -15,8 +15,10 @@ const withPWA = require("@ducanh2912/next-pwa").default({
 const nextConfig = {
   /* config options here */
   serverExternalPackages: ['pdf-parse'],
-  outputFileTracingIncludes: {
-    '/**': ['./public/books/**/*'],
+  experimental: {
+    outputFileTracingIncludes: {
+      '/**': ['./public/books/**/*'],
+    },
   },
 };
 

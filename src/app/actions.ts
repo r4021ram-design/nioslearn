@@ -82,10 +82,47 @@ function parseJSONResponse(text: string, type: 'array' | 'object'): any {
     }
 }
 
+async function findBookPath(filename: string): Promise<string> {
+    const possiblePaths = [
+        path.join(process.cwd(), 'public', 'books', filename),
+        path.join(process.cwd(), 'public/books', filename),
+        path.join(process.cwd(), '.next/server/public/books', filename),
+        path.join('/var/task/public/books', filename),
+    ];
+
+    for (const p of possiblePaths) {
+        try {
+            await fs.access(p);
+            return p;
+        } catch { }
+    }
+
+    // Diagnostic logging
+    try {
+        console.log('CWD:', process.cwd());
+        const publicDir = path.join(process.cwd(), 'public');
+        try {
+            const files = await fs.readdir(publicDir);
+            console.log('Public dir contents:', files);
+        } catch {
+            console.log('Public dir not found at', publicDir);
+        }
+    } catch (e) {
+        console.error('Diagnostic error:', e);
+    }
+
+    throw new Error(`File not found: ${filename}. Searched in: ${possiblePaths.join(', ')}`);
+}
+
 async function getTextFromPDF(bookFilename: string, pageNumber?: number, endPage?: number): Promise<string> {
     try {
         const jsonFilename = bookFilename.replace(/\.pdf$/i, '.json');
-        const jsonPath = path.join(process.cwd(), 'public', 'books', jsonFilename);
+        let jsonPath;
+        try {
+            jsonPath = await findBookPath(jsonFilename);
+        } catch {
+            throw new Error(`JSON file ${jsonFilename} not found`);
+        }
         const jsonContent = await fs.readFile(jsonPath, 'utf-8');
         const bookData = JSON.parse(jsonContent);
 
@@ -108,7 +145,7 @@ async function getTextFromPDF(bookFilename: string, pageNumber?: number, endPage
     }
 
     try {
-        const filePath = path.join(process.cwd(), 'public', 'books', bookFilename);
+        const filePath = await findBookPath(bookFilename);
         const dataBuffer = await fs.readFile(filePath);
         if (pageNumber !== undefined) {
             const pageTexts: string[] = [];
