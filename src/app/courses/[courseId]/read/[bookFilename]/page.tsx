@@ -45,6 +45,7 @@ export default function PDFReaderPage() {
     const router = useRouter();
     const [opened, { open, close }] = useDisclosure(false);
     const [sidebarOpened, { toggle: toggleSidebar }] = useDisclosure(true);
+    const [chapterDrawerOpened, { open: openChapterDrawer, close: closeChapterDrawer }] = useDisclosure(false);
     const isMobile = useMediaQuery('(max-width: 768px)');
     const [viewMode, setViewMode] = useState<'pdf' | 'ai'>('pdf');
 
@@ -123,6 +124,7 @@ export default function PDFReaderPage() {
         setChapterRange({ start: startPage, end: endPage });
 
         if (isMobile) {
+            closeChapterDrawer();
             open();
         } else {
             setViewMode('ai');
@@ -265,6 +267,71 @@ export default function PDFReaderPage() {
         });
         setScore(correct);
     };
+
+    const ChapterListContent = () => (
+        <>
+            {metaChapters.length > 0 ? (
+                <Stack gap={0}>
+                    {metaChapters.map((item: BookChapter, index) => (
+                        <Group key={index} justify="space-between" p="xs" className={classes.chapterItem} style={{ borderBottom: '1px solid #f0f0f0' }}>
+                            <Box style={{ flex: 1, cursor: 'pointer' }} onClick={() => {
+                                setPageNumber(item.startPage);
+                                setChapterRange({ start: item.startPage, end: item.endPage });
+                                setAiMode('chapter');
+                                if (isMobile) closeChapterDrawer();
+                            }}>
+                                <Text size="sm" fw={500} lineClamp={1}>{item.title}</Text>
+                                <Text size="xs" c="dimmed">{item.module ? `${item.module} ` : ''}(Pages {item.startPage}-{item.endPage})</Text>
+                            </Box>
+                            <Menu position="bottom-end">
+                                <Menu.Target>
+                                    <ActionIcon variant="subtle" size="sm"><MoreVertical size={14} /></ActionIcon>
+                                </Menu.Target>
+                                <Menu.Dropdown>
+                                    <Menu.Item leftSection={<FileText size={14} />} onClick={() => handleChapterAction(item, 'summary')}>Summarize Lesson</Menu.Item>
+                                    <Menu.Item leftSection={<HelpCircle size={14} />} onClick={() => handleChapterAction(item, 'quiz')}>Quiz Lesson</Menu.Item>
+                                    <Menu.Item leftSection={<Network size={14} />} onClick={() => handleChapterAction(item, 'mindmap')}>Mind Map</Menu.Item>
+                                    <Menu.Item leftSection={<ListChecks size={14} />} onClick={() => handleChapterAction(item, 'infographic')}>Infographic</Menu.Item>
+                                </Menu.Dropdown>
+                            </Menu>
+                        </Group>
+                    ))}
+                </Stack>
+            ) : outline.length === 0 ? (
+                <Text c="dimmed" size="sm" p="md" ta="center">No chapters found.</Text>
+            ) : (
+                <Stack gap={0}>
+                    {outline.map((item, index) => (
+                        <Group key={index} justify="space-between" p="xs" className={classes.chapterItem} style={{ borderBottom: '1px solid #f0f0f0' }}>
+                            <Text
+                                size="sm"
+                                style={{ cursor: 'pointer', flex: 1 }}
+                                lineClamp={2}
+                                onClick={async () => {
+                                    const pg = await resolvePageNumber(item.dest);
+                                    setPageNumber(pg);
+                                    if (isMobile) closeChapterDrawer();
+                                }}
+                            >
+                                {item.title}
+                            </Text>
+                            <Menu position="bottom-end">
+                                <Menu.Target>
+                                    <ActionIcon variant="subtle" size="sm"><MoreVertical size={14} /></ActionIcon>
+                                </Menu.Target>
+                                <Menu.Dropdown>
+                                    <Menu.Item leftSection={<FileText size={14} />} onClick={() => handleChapterAction(item, 'summary')}>Summarize Chapter</Menu.Item>
+                                    <Menu.Item leftSection={<HelpCircle size={14} />} onClick={() => handleChapterAction(item, 'quiz')}>Quiz Chapter</Menu.Item>
+                                    <Menu.Item leftSection={<Network size={14} />} onClick={() => handleChapterAction(item, 'mindmap')}>Mind Map</Menu.Item>
+                                    <Menu.Item leftSection={<ListChecks size={14} />} onClick={() => handleChapterAction(item, 'infographic')}>Infographic</Menu.Item>
+                                </Menu.Dropdown>
+                            </Menu>
+                        </Group>
+                    ))}
+                </Stack>
+            )}
+        </>
+    );
 
     const AIContent = () => (
         <Stack p="md" style={{ flex: 1, minHeight: 0 }}>
@@ -409,7 +476,13 @@ export default function PDFReaderPage() {
                         variant="light"
                         color="blue"
                         leftSection={<Book size={16} />}
-                        onClick={toggleSidebar}
+                        onClick={() => {
+                            if (isMobile) {
+                                openChapterDrawer();
+                            } else {
+                                toggleSidebar();
+                            }
+                        }}
                     >
                         Chapters
                     </Button>
@@ -431,70 +504,13 @@ export default function PDFReaderPage() {
             </Group>
 
             <Flex style={{ height: 'calc(100vh - 60px)' }}>
-                {sidebarOpened && (
+                {!isMobile && sidebarOpened && (
                     <Box w={300} bg="white" style={{ borderRight: '1px solid #eee', display: 'flex', flexDirection: 'column' }}>
                         <Box p="md" style={{ borderBottom: '1px solid #eee' }}>
                             <Title order={6}>Chapters</Title>
                         </Box>
                         <ScrollArea style={{ flex: 1 }}>
-                            {metaChapters.length > 0 ? (
-                                <Stack gap={0}>
-                                    {metaChapters.map((item: BookChapter, index) => (
-                                        <Group key={index} justify="space-between" p="xs" className={classes.chapterItem} style={{ borderBottom: '1px solid #f0f0f0' }}>
-                                            <Box style={{ flex: 1, cursor: 'pointer' }} onClick={() => {
-                                                setPageNumber(item.startPage);
-                                                setChapterRange({ start: item.startPage, end: item.endPage });
-                                                setAiMode('chapter');
-                                            }}>
-                                                <Text size="sm" fw={500} lineClamp={1}>{item.title}</Text>
-                                                <Text size="xs" c="dimmed">{item.module ? `${item.module} ` : ''}(Pages {item.startPage}-{item.endPage})</Text>
-                                            </Box>
-                                            <Menu position="bottom-end">
-                                                <Menu.Target>
-                                                    <ActionIcon variant="subtle" size="sm"><MoreVertical size={14} /></ActionIcon>
-                                                </Menu.Target>
-                                                <Menu.Dropdown>
-                                                    <Menu.Item leftSection={<FileText size={14} />} onClick={() => handleChapterAction(item, 'summary')}>Summarize Lesson</Menu.Item>
-                                                    <Menu.Item leftSection={<HelpCircle size={14} />} onClick={() => handleChapterAction(item, 'quiz')}>Quiz Lesson</Menu.Item>
-                                                    <Menu.Item leftSection={<Network size={14} />} onClick={() => handleChapterAction(item, 'mindmap')}>Mind Map</Menu.Item>
-                                                    <Menu.Item leftSection={<ListChecks size={14} />} onClick={() => handleChapterAction(item, 'infographic')}>Infographic</Menu.Item>
-                                                </Menu.Dropdown>
-                                            </Menu>
-                                        </Group>
-                                    ))}
-                                </Stack>
-                            ) : outline.length === 0 ? (
-                                <Text c="dimmed" size="sm" p="md" ta="center">No chapters found.</Text>
-                            ) : (
-                                <Stack gap={0}>
-                                    {outline.map((item, index) => (
-                                        <Group key={index} justify="space-between" p="xs" className={classes.chapterItem} style={{ borderBottom: '1px solid #f0f0f0' }}>
-                                            <Text
-                                                size="sm"
-                                                style={{ cursor: 'pointer', flex: 1 }}
-                                                lineClamp={2}
-                                                onClick={async () => {
-                                                    const pg = await resolvePageNumber(item.dest);
-                                                    setPageNumber(pg);
-                                                }}
-                                            >
-                                                {item.title}
-                                            </Text>
-                                            <Menu position="bottom-end">
-                                                <Menu.Target>
-                                                    <ActionIcon variant="subtle" size="sm"><MoreVertical size={14} /></ActionIcon>
-                                                </Menu.Target>
-                                                <Menu.Dropdown>
-                                                    <Menu.Item leftSection={<FileText size={14} />} onClick={() => handleChapterAction(item, 'summary')}>Summarize Chapter</Menu.Item>
-                                                    <Menu.Item leftSection={<HelpCircle size={14} />} onClick={() => handleChapterAction(item, 'quiz')}>Quiz Chapter</Menu.Item>
-                                                    <Menu.Item leftSection={<Network size={14} />} onClick={() => handleChapterAction(item, 'mindmap')}>Mind Map</Menu.Item>
-                                                    <Menu.Item leftSection={<ListChecks size={14} />} onClick={() => handleChapterAction(item, 'infographic')}>Infographic</Menu.Item>
-                                                </Menu.Dropdown>
-                                            </Menu>
-                                        </Group>
-                                    ))}
-                                </Stack>
-                            )}
+                            <ChapterListContent />
                         </ScrollArea>
                     </Box>
                 )}
@@ -557,6 +573,16 @@ export default function PDFReaderPage() {
                     )}
                 </Box>
             </Flex>
+
+            <Drawer
+                opened={chapterDrawerOpened}
+                onClose={closeChapterDrawer}
+                title="Chapters"
+                padding="md"
+                size="80%"
+            >
+                <ChapterListContent />
+            </Drawer>
 
             <Drawer
                 opened={opened}
