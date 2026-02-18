@@ -7,7 +7,7 @@ import path from 'path';
 const pdf = require('pdf-parse/lib/pdf-parse.js');
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
-const MODEL_NAME = 'gemini-1.5-flash';
+const MODEL_NAME = 'gemini-flash-latest';
 
 // On Vercel, the filesystem is read-only except for /tmp
 const IS_VERCEL = process.env.VERCEL === '1';
@@ -99,14 +99,8 @@ async function findBookPath(filename: string): Promise<string> {
 
     // Diagnostic logging
     try {
+        console.log('File not found in any expected location:', filename);
         console.log('CWD:', process.cwd());
-        const publicDir = path.join(process.cwd(), 'public');
-        try {
-            const files = await fs.readdir(publicDir);
-            console.log('Public dir contents:', files);
-        } catch {
-            console.log('Public dir not found at', publicDir);
-        }
     } catch (e) {
         console.error('Diagnostic error:', e);
     }
