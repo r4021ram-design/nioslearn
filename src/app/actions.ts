@@ -31,20 +31,19 @@ function getCacheKey(mode: string, page?: number, end?: number) {
 }
 
 async function getCachedData(bookId: string, type: string, key: string) {
+    const compositeKey = `${bookId}:${type}:${key}`;
     // 1. Try Supabase first
     try {
-        if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+        if (process.env.NEXT_PUBLIC_SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY)) {
             const { data, error } = await supabase
-                .from('ai_cache')
-                .select('content')
-                .eq('book_id', bookId)
-                .eq('type', type)
-                .eq('cache_key', key)
+                .from('ai_catch')
+                .select('data')
+                .eq('name', compositeKey)
                 .single();
 
             if (data && !error) {
                 console.log(`Cache hit (Supabase): ${type} for ${bookId}`);
-                return data.content;
+                return data.data;
             }
         }
     } catch (e) {
@@ -64,17 +63,17 @@ async function getCachedData(bookId: string, type: string, key: string) {
 }
 
 async function saveCachedData(bookId: string, type: string, key: string, data: any) {
+    const compositeKey = `${bookId}:${type}:${key}`;
     // 1. Try Supabase first
     try {
-        if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+        if (process.env.NEXT_PUBLIC_SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY)) {
             const { error } = await supabase
-                .from('ai_cache')
+                .from('ai_catch')
                 .upsert({
-                    book_id: bookId,
-                    type: type,
-                    cache_key: key,
-                    content: data
-                }, { onConflict: 'book_id,type,cache_key' });
+                    name: compositeKey,
+                    data: data,
+                    updated_at: new Date().toISOString()
+                }, { onConflict: 'name' });
 
             if (!error) {
                 console.log(`Cache saved (Supabase): ${type} for ${bookId}`);
