@@ -3,6 +3,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import fs from 'fs/promises';
 import path from 'path';
+import { supabase } from '@/lib/supabase';
 /* eslint-disable @typescript-eslint/no-require-imports */
 const pdf = require('pdf-parse/lib/pdf-parse.js');
 
@@ -30,8 +31,30 @@ function getCacheKey(mode: string, page?: number, end?: number) {
 }
 
 async function getCachedData(bookId: string, type: string, key: string) {
+    // 1. Try Supabase first
     try {
-        const cacheFile = path.join(CACHE_DIR, `${bookId.replace(/\.pdf$/i, '')}.json`);
+        if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+            const { data, error } = await supabase
+                .from('ai_cache')
+                .select('content')
+                .eq('book_id', bookId)
+                .eq('type', type)
+                .eq('cache_key', key)
+                .single();
+
+            if (data && !error) {
+                console.log(`Cache hit (Supabase): ${type} for ${bookId}`);
+                return data.content;
+            }
+        }
+    } catch (e) {
+        console.warn('Supabase cache read failed, falling back to local:', e);
+    }
+
+    // 2. Fallback to local filesystem
+    try {
+        const bookKey = bookId.replace(/\.pdf$/i, '');
+        const cacheFile = path.join(CACHE_DIR, `${bookKey}.json`);
         const content = await fs.readFile(cacheFile, 'utf-8');
         const cache = JSON.parse(content);
         return cache[type]?.[key] || null;
@@ -41,6 +64,31 @@ async function getCachedData(bookId: string, type: string, key: string) {
 }
 
 async function saveCachedData(bookId: string, type: string, key: string, data: any) {
+    // 1. Try Supabase first
+    try {
+        if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+            const { error } = await supabase
+                .from('ai_cache')
+                .upsert({
+                    book_id: bookId,
+                    type: type,
+                    cache_key: key,
+                    content: data
+                }, { onConflict: 'book_id,type,cache_key' });
+
+            if (!error) {
+                console.log(`Cache saved (Supabase): ${type} for ${bookId}`);
+                // If saved to DB, we don't necessarily need to save to local disk on Vercel
+                if (IS_VERCEL) return;
+            } else {
+                console.error('Supabase save error:', error);
+            }
+        }
+    } catch (e) {
+        console.error('Failed to save to Supabase:', e);
+    }
+
+    // 2. Fallback to local filesystem (or /tmp on Vercel)
     try {
         await ensureCacheDir();
         const bookKey = bookId.replace(/\.pdf$/i, '');

@@ -13,6 +13,7 @@
     "@google/generative-ai": "^0.24.1",
     "@mantine/core": "^8.3.14",
     "@mantine/hooks": "^8.3.14",
+    "@supabase/supabase-js": "^2.96.0",
     "@types/dagre": "^0.7.53",
     "dagre": "^0.8.5",
     "lodash": "^4.17.23",
