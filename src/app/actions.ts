@@ -11,7 +11,7 @@ const MODEL_NAME = 'gemini-flash-latest';
 
 // On Vercel, the filesystem is read-only except for /tmp
 const IS_VERCEL = process.env.VERCEL === '1';
-const CACHE_DIR = IS_VERCEL 
+const CACHE_DIR = IS_VERCEL
     ? path.join('/tmp', 'ai-cache')
     : path.join(process.cwd(), 'src', 'data', 'ai-cache');
 
@@ -137,9 +137,9 @@ async function getTextFromPDF(bookFilename: string, pageNumber?: number, endPage
         }
         const data = await pdf(dataBuffer);
         return data.text;
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error reading PDF:', error);
-        throw new Error('Failed to read book content.');
+        throw new Error(`Failed to read book content: ${error.message}`);
     }
 }
 
@@ -165,9 +165,9 @@ export async function getSummary(bookFilename: string, mode: 'full' | 'page' | '
         const summary = result.response.text();
         await saveCachedData(bookFilename, 'summary', cacheKey, summary);
         return summary;
-    } catch (error) {
-        console.error('Summary error:', error);
-        return 'Failed to generate summary.';
+    } catch (error: any) {
+        console.error('Summary error details:', error);
+        return `Failed to generate summary: ${error.message || 'Unknown error'}. Check server logs or API key.`;
     }
 }
 
